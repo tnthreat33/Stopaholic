@@ -1,0 +1,6 @@
+@Stopaholic.server_HostAddress = http://localhost:5101
+
+GET {{Stopaholic.server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
