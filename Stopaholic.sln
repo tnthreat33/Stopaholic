@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stopaholic", "Stopaholic\St
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stopaholic.Client", "Stopaholic\Stopaholic.Client\Stopaholic.Client.csproj", "{2AADE760-B91D-4395-8AEE-98215CB2E156}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stopaholic.server", "Stopaholic.server\Stopaholic.server.csproj", "{AC463A52-B8E9-467F-AA1D-C3EF72204836}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stopaholic.Server", "Stopaholic.server\Stopaholic.Server.csproj", "{AC463A52-B8E9-467F-AA1D-C3EF72204836}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopaholic.Shared", "Shopaholic.Shared\Shopaholic.Shared.csproj", "{BDAE6802-D8BC-44E1-A12B-6B1EDFD83CE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stopaholic.Shared", "Shopaholic.Shared\Stopaholic.Shared.csproj", "{BDAE6802-D8BC-44E1-A12B-6B1EDFD83CE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

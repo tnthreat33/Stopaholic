@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shopaholic.Shared\Shopaholic.Shared.csproj" />
+    <ProjectReference Include="..\..\Shopaholic.Shared\Stopaholic.Shared.csproj" />
   </ItemGroup>
 
 </Project>
