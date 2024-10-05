@@ -1,4 +1,4 @@
-using Stopaholic.Client.Pages;
+
 using Stopaholic.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,7 +27,6 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
-    .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(Stopaholic.Client._Imports).Assembly);
+    .AddInteractiveWebAssemblyRenderMode();
 
 app.Run();
