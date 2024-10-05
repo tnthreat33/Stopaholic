@@ -1,4 +1,6 @@
-using Microsoft.EntityFrameworkCore;      
+using Microsoft.EntityFrameworkCore;
+using Stopaholic.Server.Repositories;
+using Stopaholic.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,9 @@ builder.Services.AddSwaggerGen();
 // Configure Entity Framework and PostgreSQL
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IMonthlyListRepository, MonthlyListRepository>();
+builder.Services.AddScoped<IMonthlyListService, MonthlyListService>();
 
 var app = builder.Build();
 
