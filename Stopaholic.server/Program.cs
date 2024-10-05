@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;      // Namespace where ApplicationDbContext is defined
+using Microsoft.EntityFrameworkCore;      
 
 var builder = WebApplication.CreateBuilder(args);
 
