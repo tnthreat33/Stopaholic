@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stopaholic", "Stopaholic\Stopaholic\Stopaholic.csproj", "{406CA199-7A2F-4787-81EC-F94902FAA780}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stopaholic", "Stopaholic\Stopaholic\Stopaholic.csproj", "{406CA199-7A2F-4787-81EC-F94902FAA780}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stopaholic.Client", "Stopaholic\Stopaholic.Client\Stopaholic.Client.csproj", "{2AADE760-B91D-4395-8AEE-98215CB2E156}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stopaholic.Server", "Stopaholic.server\Stopaholic.Server.csproj", "{AC463A52-B8E9-467F-AA1D-C3EF72204836}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stopaholic.Server", "Stopaholic.server\Stopaholic.Server.csproj", "{AC463A52-B8E9-467F-AA1D-C3EF72204836}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stopaholic.Shared", "Shopaholic.Shared\Stopaholic.Shared.csproj", "{BDAE6802-D8BC-44E1-A12B-6B1EDFD83CE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stopaholic.Shared", "Shopaholic.Shared\Stopaholic.Shared.csproj", "{BDAE6802-D8BC-44E1-A12B-6B1EDFD83CE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +19,6 @@ Global
 		{406CA199-7A2F-4787-81EC-F94902FAA780}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{406CA199-7A2F-4787-81EC-F94902FAA780}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{406CA199-7A2F-4787-81EC-F94902FAA780}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2AADE760-B91D-4395-8AEE-98215CB2E156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2AADE760-B91D-4395-8AEE-98215CB2E156}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2AADE760-B91D-4395-8AEE-98215CB2E156}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2AADE760-B91D-4395-8AEE-98215CB2E156}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AC463A52-B8E9-467F-AA1D-C3EF72204836}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AC463A52-B8E9-467F-AA1D-C3EF72204836}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC463A52-B8E9-467F-AA1D-C3EF72204836}.Release|Any CPU.ActiveCfg = Release|Any CPU
