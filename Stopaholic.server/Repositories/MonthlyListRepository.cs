@@ -19,5 +19,9 @@ namespace Stopaholic.Server.Repositories
             await _context.MonthlyWantLists.AddAsync(monthlyList);
             await _context.SaveChangesAsync();
         }
+        public async Task<List<MonthlyList>> GetAllMonthlyListAsync()
+        {
+            await _context.MonthlyWantLists.ToListAsync();
+        }
     }
 }
