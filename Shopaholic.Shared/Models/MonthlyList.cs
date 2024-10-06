@@ -13,7 +13,6 @@ namespace Stopaholic.Shared.Models
         public List<Item> Items { get; set; }
         public decimal TotalCost => Items?.Sum(item => item.TotalCost) ?? 0;
         public int UserId { get; set; }
-        public User User { get; set; }
     }
 
 }

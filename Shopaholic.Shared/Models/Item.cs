@@ -15,7 +15,6 @@ namespace Stopaholic.Shared.Models
         public decimal TotalCost { get; set; }
         public PriorityLevel Priority { get; set; }
         public int MonthlyWantListId { get; set; }
-        public MonthlyList MonthlyList { get; set; }
     }
 
     public enum PriorityLevel

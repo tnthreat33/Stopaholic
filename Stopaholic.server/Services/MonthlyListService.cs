@@ -1,5 +1,6 @@
 ﻿using Stopaholic.Shared.Models;
 using Stopaholic.Server.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Stopaholic.Server.Services
 {
@@ -16,6 +17,10 @@ namespace Stopaholic.Server.Services
         {
             
             await _monthlyListRepository.AddMonthlyListAsync(monthlyList);
+        }
+        public async Task<List<MonthlyList>> GetAllMonthlyListAsync()
+        {
+            await _monthlyListRepository.GetMonthlyListAsync();
         }
     }
 }

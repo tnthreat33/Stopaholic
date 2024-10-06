@@ -5,5 +5,6 @@ namespace Stopaholic.Server.Services
     public interface IMonthlyListService
     {
         Task AddMonthlyListAsync(MonthlyList monthlyList);
+        Task <List<MonthlyList>> GetMonthlyListAsync();
     }
 }
