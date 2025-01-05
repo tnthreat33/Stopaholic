@@ -1,5 +1,7 @@
 ﻿using Stopaholic.Shared.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Stopaholic.Server.Repositories
 {
@@ -9,19 +11,19 @@ namespace Stopaholic.Server.Repositories
 
         public MonthlyListRepository(ApplicationDbContext context)
         {
-            {
-                _context = context;
-            }
-
+            _context = context;
         }
+
         public async Task AddMonthlyListAsync(MonthlyList monthlyList)
         {
-            await _context.MonthlyWantLists.AddAsync(monthlyList);
-            await _context.SaveChangesAsync();
+            await _context.MonthlyWantLists.AddAsync(monthlyList); // Save new MonthlyList
+            await _context.SaveChangesAsync();                     // Commit changes to database
         }
-        public async Task<List<MonthlyList>> GetAllMonthlyListAsync()
+
+        public async Task<List<MonthlyList>> GetMonthlyListAsync()
         {
-            await _context.MonthlyWantLists.ToListAsync();
+            // Fetch all MonthlyList entries from the database
+            return await _context.MonthlyWantLists.ToListAsync();
         }
     }
 }

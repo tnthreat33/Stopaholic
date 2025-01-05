@@ -14,11 +14,15 @@ namespace Stopaholic.Server.Controllers
         {
             _monthlyListService = monthlyListService;
         }
+
         [HttpGet]
-        public async Task<IActionResult> GetAllMonthlyListsAysnc()
+        public async Task<IActionResult> GetAllMonthlyListsAsync()
         {
-            await _monthlyListService.GetMonthlyListAsync();
+            // Fetch all monthly lists without arguments
+            var monthlyLists = await _monthlyListService.GetMonthlyListAsync();
+            return Ok(monthlyLists); // Return the list
         }
+
         [HttpPost]
         public async Task<IActionResult> CreateMonthlyList(MonthlyList monthlyList)
         {
