@@ -5,6 +5,6 @@ namespace Stopaholic.Server.Repositories
     public interface IMonthlyListRepository
     {
         Task AddMonthlyListAsync(MonthlyList monthlyList);
-        Task<List<MonthlyList>> GetAllMonthlyListAsync();
+        Task<List<MonthlyList>> GetMonthlyListAsync(); // Correct method without parameter
     }
 }
