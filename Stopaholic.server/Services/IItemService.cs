@@ -5,5 +5,6 @@ namespace Stopaholic.Server.Services
     public interface IItemService
     {
         Task AddItemAsync(Item Item);
+        Task<List<Item>> GetItemsAsync(int userId);
     }
 }

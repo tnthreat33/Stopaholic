@@ -26,5 +26,11 @@ namespace Stopaholic.Server.Controllers
             await _itemService.AddItemAsync(Item);
             return Ok(Item);
         }
+        [HttpGet]
+        public async Task<IActionResult> GetItemsAsync(int userId )
+        {
+            var items = await _itemService.GetItemsAsync(userId);
+            return Ok(items); 
+        }
     }
 }

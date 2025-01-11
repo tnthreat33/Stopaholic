@@ -1,5 +1,7 @@
 ﻿@page "/"
 
+@using Stopaholic.Shared.Models;
+
 <PageTitle>Stopaholic</PageTitle>
 
 <div class="homepage-container">
@@ -11,13 +13,67 @@
 
     <div class="list-display">
         <h2>Monthly Wants List</h2>
-        <p>Your list will appear here each month, helping you track and manage your expenses.</p>
         <button class="btn-primary">Add Item to List</button>
         <button class="btn-secondary">Create Account</button>
+
+       <table class="table-no-borders">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Purchase Link</th>
+                <th>Total Cost</th>
+                <th>Priority</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Items != null && Items.Any())
+            {
+                @foreach (var item in Items)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>
+                            <a href="@item.PurchaseLink" target="_blank">View Item</a>
+                        </td>
+                        <td>@item.TotalCost.ToString("C")</td>
+                        <td>@item.Priority</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" style="text-align: center;">No items available</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
     </div>
 </div>
 
-@code{
+@code {
+    private List<Item> Items = new List<Item>();
 
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {   
+            int userId = 1; //remove this after adding the login funtionality 
+
+            var httpClient = new HttpClient();
+            var requestUrl = $"https://localhost:7269/item?userId={userId}"; 
+            Items = await httpClient.GetFromJsonAsync<List<Item>>(requestUrl);
+
+            if (Items == null)
+            {
+                Items = new List<Item>(); 
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching items: {ex.Message}");
+        }
+    }
 
 }
