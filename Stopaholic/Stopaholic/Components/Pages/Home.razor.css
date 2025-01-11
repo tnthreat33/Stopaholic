@@ -1,0 +1,17 @@
+﻿
+.table-no-borders {
+    border-collapse: collapse;
+    width: 100%;
+    margin-left: 150px;
+}
+
+    .table-no-borders th,
+    .table-no-borders td {
+        border: none;
+        padding: 8px;
+    }
+
+    .table-no-borders td {
+        text-align: center;
+        width: fit-content;
+    }

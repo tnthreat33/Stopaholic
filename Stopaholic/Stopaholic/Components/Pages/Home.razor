@@ -16,19 +16,39 @@
         <button class="btn-primary">Add Item to List</button>
         <button class="btn-secondary">Create Account</button>
 
-        <ul>
+       <table class="table-no-borders">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Purchase Link</th>
+                <th>Total Cost</th>
+                <th>Priority</th>
+            </tr>
+        </thead>
+        <tbody>
             @if (Items != null && Items.Any())
             {
                 @foreach (var item in Items)
                 {
-                    <li>@item.Name</li>
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>
+                            <a href="@item.PurchaseLink" target="_blank">View Item</a>
+                        </td>
+                        <td>@item.TotalCost.ToString("C")</td>
+                        <td>@item.Priority</td>
+                    </tr>
                 }
             }
             else
             {
-                <li>No items available</li>
+                <tr>
+                    <td colspan="5" style="text-align: center;">No items available</td>
+                </tr>
             }
-        </ul>
+        </tbody>
+    </table>
+
     </div>
 </div>
 
@@ -38,14 +58,16 @@
     protected override async Task OnInitializedAsync()
     {
         try
-        {
-            // Make an HTTP GET request to fetch items
+        {   
+            int userId = 1; //remove this after adding the login funtionality 
+
             var httpClient = new HttpClient();
-            Items = await httpClient.GetFromJsonAsync<List<Item>>("https://localhost:5001/api/item");
+            var requestUrl = $"https://localhost:7269/item?userId={userId}"; 
+            Items = await httpClient.GetFromJsonAsync<List<Item>>(requestUrl);
 
             if (Items == null)
             {
-                Items = new List<Item>(); // Fallback to an empty list if null is returned
+                Items = new List<Item>(); 
             }
         }
         catch (Exception ex)
@@ -53,4 +75,5 @@
             Console.WriteLine($"Error fetching items: {ex.Message}");
         }
     }
+
 }

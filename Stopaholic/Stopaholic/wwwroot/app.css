@@ -7,7 +7,6 @@ html, body {
     padding: 0;
 }
 
-/* Anchor and Button Styles */
 a, .btn-link {
     color: #006bb7;
     text-decoration: none;
@@ -36,14 +35,12 @@ a, .btn-link {
     box-shadow: 0 0 0 0.2rem rgba(88, 122, 72, 0.5);
 }
 
-/* Content Styles */
 .content {
     padding-top: 2rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
 }
 
-/* Heading Styles */
 h1 {
     font-family: 'Playfair Display', serif;
     font-size: 2.5rem;
@@ -56,7 +53,6 @@ h1 {
         outline: none;
     }
 
-/* Validation Styles */
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
 }
@@ -70,7 +66,6 @@ h1 {
     font-weight: bold;
 }
 
-/* Error Boundary Styles */
 .blazor-error-boundary {
     background-color: #b32121;
     color: white;
@@ -83,12 +78,10 @@ h1 {
         font-weight: bold;
     }
 
-/* Custom Checkbox */
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
 }
 
-/* Main container */
 .homepage-container {
     display: flex;
     flex-direction: column;
@@ -99,7 +92,6 @@ h1 {
     text-align: center;
 }
 
-/* Header section */
 .homepage-header h1 {
     font-family: 'Playfair Display', serif;
     font-size: 3rem;
@@ -121,7 +113,6 @@ h1 {
     margin-bottom: 2rem;
 }
 
-/* List display section */
 .list-display {
     background-color: #ffffff;
     padding: 2rem;
@@ -145,7 +136,6 @@ h1 {
         margin-bottom: 2rem;
     }
 
-/* Buttons */
 .btn-primary, .btn-secondary {
     color: #fff;
     background-color: #587a48;
@@ -163,11 +153,29 @@ h1 {
         background-color: #4e6d42;
     }
 
-/* Adjust the button styles for secondary button */
+
 .btn-secondary {
     background-color: #435f3a;
 }
 
     .btn-secondary:hover {
         background-color: #384e31;
+    }
+
+
+.table-no-borders {
+    border-collapse: collapse;
+    width: 100%;
+    margin-left: 150px;
+}
+
+    .table-no-borders th,
+    .table-no-borders td {
+        border: none;
+        padding: 8px;
+    }
+
+    .table-no-borders td {
+        text-align: center;
+        width: 100px;
     }
