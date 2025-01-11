@@ -18,9 +18,9 @@ namespace Stopaholic.Server.Services
             await _ItemRepository.AddItemAsync(Item);
         }
 
-        public async Task<List<Item>> GetItemsAsync()
+        public async Task<List<Item>> GetItemsAsync(int userId)
         {
-            return await _ItemRepository.GetItemsAsync();
+            return await _ItemRepository.GetItemsAsync(userId);
         }
     }
 }

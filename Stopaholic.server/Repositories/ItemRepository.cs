@@ -18,10 +18,12 @@ namespace Stopaholic.Server.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Item>> GetItemsAsync()
+        public async Task<List<Item>> GetItemsAsync(int userId)
         {
-            // Return the list of items
-            return await _context.WantItems.ToListAsync();
+            return await _context.WantItems
+                .Where(item => item.UserId == userId) 
+                .ToListAsync(); 
         }
+
     }
 }
