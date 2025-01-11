@@ -1,6 +1,6 @@
 ﻿@page "/"
 
-@using Stopaholic.Shared.Models
+@using Stopaholic.Shared.Models;
 
 <PageTitle>Stopaholic</PageTitle>
 
@@ -41,7 +41,7 @@
         {
             // Make an HTTP GET request to fetch items
             var httpClient = new HttpClient();
-            Items = await httpClient.GetFromJsonAsync<List<Item>>("https://localhost:5001/api/items");
+            Items = await httpClient.GetFromJsonAsync<List<Item>>("https://localhost:5001/api/item");
 
             if (Items == null)
             {
