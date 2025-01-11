@@ -9,15 +9,19 @@ namespace Stopaholic.Server.Repositories
 
         public ItemRepository(ApplicationDbContext context)
         {
-            {
-                _context = context;
-            }
-
+            _context = context;
         }
-        public async Task AddItemAsync(Item Item)
+
+        public async Task AddItemAsync(Item item)
         {
-            await _context.WantItems.AddAsync(Item);
+            await _context.WantItems.AddAsync(item);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<Item>> GetItemsAsync()
+        {
+            // Return the list of items
+            return await _context.WantItems.ToListAsync();
         }
     }
 }
