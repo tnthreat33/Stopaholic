@@ -1,6 +1,7 @@
 ﻿@page "/"
 
 @using Stopaholic.Shared.Models;
+@inject HttpClient Http
 
 <PageTitle>Stopaholic</PageTitle>
 
@@ -13,62 +14,54 @@
 
     <div class="list-display">
         <h2>Monthly Wants List</h2>
-        <button class="btn-primary">Add Item to List</button>
+        <button class="btn-primary" @onclick="ShowAddItemModal">Add Item to List</button>
         <button class="btn-secondary">Create Account</button>
 
-       <table class="table-no-borders">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Purchase Link</th>
-                <th>Total Cost</th>
-                <th>Priority</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Items != null && Items.Any())
-            {
-                @foreach (var item in Items)
+        <table class="table-no-borders">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Purchase Link</th>
+                    <th>Total Cost</th>
+                    <th>Priority</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Items != null && Items.Any())
+                {
+                    @foreach (var item in Items)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td><a href="@item.PurchaseLink" target="_blank">View Item</a></td>
+                            <td>@item.TotalCost.ToString("C")</td>
+                            <td>@item.Priority</td>
+                        </tr>
+                    }
+                }
+                else
                 {
                     <tr>
-                        <td>@item.Name</td>
-                        <td>
-                            <a href="@item.PurchaseLink" target="_blank">View Item</a>
-                        </td>
-                        <td>@item.TotalCost.ToString("C")</td>
-                        <td>@item.Priority</td>
+                        <td colspan="5" style="text-align: center;">No items available</td>
                     </tr>
                 }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="5" style="text-align: center;">No items available</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
+            </tbody>
+        </table>
     </div>
 </div>
 
 @code {
     private List<Item> Items = new List<Item>();
+    private Item NewItem = new Item();
+    private bool IsModalOpen = false;
 
     protected override async Task OnInitializedAsync()
     {
         try
-        {   
-            int userId = 1; //remove this after adding the login funtionality 
-
-            var httpClient = new HttpClient();
-            var requestUrl = $"https://localhost:7269/item?userId={userId}"; 
-            Items = await httpClient.GetFromJsonAsync<List<Item>>(requestUrl);
-
-            if (Items == null)
-            {
-                Items = new List<Item>(); 
-            }
+        {
+            int userId = 1; // Temporary until login is added
+            var requestUrl = $"https://localhost:7269/item?userId={userId}";
+            Items = await Http.GetFromJsonAsync<List<Item>>(requestUrl) ?? new List<Item>();
         }
         catch (Exception ex)
         {
@@ -76,4 +69,22 @@
         }
     }
 
+    private void ShowAddItemModal()
+    {
+        NewItem = new Item();
+        IsModalOpen = true;
+    }
+
+    private void CloseModal()
+    {
+        IsModalOpen = false;
+    }
+
+    private async Task AddItem()
+    {
+        NewItem.UserId = 1; // Replace with logged-in user ID when authentication is added
+        await Http.PostAsJsonAsync("/item", NewItem);
+        Items.Add(NewItem);
+        CloseModal();
+    }
 }
