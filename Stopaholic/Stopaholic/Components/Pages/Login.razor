@@ -1,0 +1,33 @@
+﻿@inject AuthStateProvider AuthStateProvider
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+@code {
+    private string Email = "";
+    private string Password = "";
+
+    private async Task LoginUser()
+    {
+        var user = new { Email, Password };
+        var response = await Http.PostAsJsonAsync("https://localhost:7269/user/login", user);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadFromJsonAsync<TokenResponse>();
+
+            // Notify the AuthStateProvider with the token
+            AuthStateProvider.NotifyUserAuthentication(result.Token);
+
+            Navigation.NavigateTo("/");
+        }
+        else
+        {
+            Console.WriteLine("Login failed.");
+        }
+    }
+
+    class TokenResponse
+    {
+        public string Token { get; set; }
+    }
+}

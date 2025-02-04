@@ -1,7 +1,10 @@
 ﻿@page "/"
 
 @using Stopaholic.Shared.Models;
+@using System.Security.Claims;
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject AuthStateProvider AuthenticationStateProvider
 
 <PageTitle>Stopaholic</PageTitle>
 
@@ -15,7 +18,7 @@
     <div class="list-display">
         <h2>Monthly Wants List</h2>
         <button class="btn-primary" @onclick="ShowAddItemModal">Add Item to List</button>
-        <button class="btn-secondary">Create Account</button>
+        <button class="btn-secondary" @onclick="NavigateToLogin">Account</button>
 
         <table class="table-no-borders">
             <thead>
@@ -42,7 +45,7 @@
                 else
                 {
                     <tr>
-                        <td colspan="5" style="text-align: center;">No items available</td>
+                        <td colspan="4" style="text-align: center;">No items available</td>
                     </tr>
                 }
             </tbody>
@@ -50,16 +53,67 @@
     </div>
 </div>
 
+@if (IsModalOpen)
+{
+    <div class="modal">
+        <div class="modal-content">
+            <h2>Add New Item</h2>
+
+            <label>Name:</label>
+            <input type="text" @bind="NewItem.Name" />
+
+            <label>Purchase Link:</label>
+            <input type="text" @bind="NewItem.PurchaseLink" />
+
+            <label>Total Cost:</label>
+            <input type="number" @bind="NewItem.TotalCost" />
+
+            <label>Priority:</label>
+            <select @bind="NewItem.Priority">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+
+            <div class="modal-buttons">
+                <button class="btn-primary" @onclick="AddItem">Add</button>
+                <button class="btn-secondary" @onclick="CloseModal">Cancel</button>
+            </div>
+        </div>
+    </div>
+}
+
 @code {
     private List<Item> Items = new List<Item>();
     private Item NewItem = new Item();
     private bool IsModalOpen = false;
+    private int? UserId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        // Get authentication state and extract user ID if authenticated
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            UserId = int.Parse(user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
+
+            if (UserId.HasValue)
+            {
+                await FetchItemsForUser(UserId.Value);
+            }
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/login");
+        }
+    }
+
+    private async Task FetchItemsForUser(int userId)
+    {
         try
         {
-            int userId = 1; // Temporary until login is added
             var requestUrl = $"https://localhost:7269/item?userId={userId}";
             Items = await Http.GetFromJsonAsync<List<Item>>(requestUrl) ?? new List<Item>();
         }
@@ -82,9 +136,17 @@
 
     private async Task AddItem()
     {
-        NewItem.UserId = 1; // Replace with logged-in user ID when authentication is added
-        await Http.PostAsJsonAsync("/item", NewItem);
-        Items.Add(NewItem);
-        CloseModal();
+        if (UserId.HasValue)
+        {
+            NewItem.UserId = UserId.Value;  // Use the logged-in user's ID
+            await Http.PostAsJsonAsync("/item", NewItem);
+            Items.Add(NewItem);
+            CloseModal();
+        }
+    }
+
+    private void NavigateToLogin()
+    {
+        NavigationManager.NavigateTo("/login");
     }
 }
