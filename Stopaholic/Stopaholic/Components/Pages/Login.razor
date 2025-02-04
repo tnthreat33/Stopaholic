@@ -1,15 +1,6 @@
-﻿@page "/login"
+﻿@inject AuthStateProvider AuthStateProvider
 @inject HttpClient Http
 @inject NavigationManager Navigation
-@using Microsoft.AspNetCore.Authorization
-@using Microsoft.AspNetCore.Components.Authorization
-
-<h3>Login</h3>
-
-<input @bind="Email" placeholder="Email" />
-<input @bind="Password" type="password" placeholder="Password" />
-
-<button @onclick="LoginUser">Login</button>
 
 @code {
     private string Email = "";
@@ -23,7 +14,10 @@
         if (response.IsSuccessStatusCode)
         {
             var result = await response.Content.ReadFromJsonAsync<TokenResponse>();
-            SecureStorage.Set("authToken", result.Token);
+
+            // Notify the AuthStateProvider with the token
+            AuthStateProvider.NotifyUserAuthentication(result.Token);
+
             Navigation.NavigateTo("/");
         }
         else
@@ -37,4 +31,3 @@
         public string Token { get; set; }
     }
 }
-

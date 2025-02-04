@@ -1,8 +1,9 @@
 ﻿@page "/"
 
 @using Stopaholic.Shared.Models;
+@using System.Security.Claims;
 @inject HttpClient Http
-@inject NavigationManager Navigation
+@inject NavigationManager NavigationManager
 @inject AuthStateProvider AuthenticationStateProvider
 
 <PageTitle>Stopaholic</PageTitle>
@@ -96,18 +97,15 @@
 
         if (user.Identity.IsAuthenticated)
         {
-            // Get the logged-in user's ID from the ClaimsPrincipal
             UserId = int.Parse(user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
 
             if (UserId.HasValue)
             {
-                // Fetch items based on the user ID
                 await FetchItemsForUser(UserId.Value);
             }
         }
         else
         {
-            // If the user is not authenticated, redirect to the login page
             NavigationManager.NavigateTo("/login");
         }
     }
