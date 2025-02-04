@@ -15,7 +15,7 @@
     <div class="list-display">
         <h2>Monthly Wants List</h2>
         <button class="btn-primary" @onclick="ShowAddItemModal">Add Item to List</button>
-        <button class="btn-secondary">Create Account</button>
+        <button class="btn-secondary">Account</button>
 
         <table class="table-no-borders">
             <thead>
@@ -49,6 +49,36 @@
         </table>
     </div>
 </div>
+
+@if (IsModalOpen)
+{
+    <div class="modal">
+        <div class="modal-content">
+            <h2>Add New Item</h2>
+
+            <label>Name:</label>
+            <input type="text" @bind="NewItem.Name" />
+
+            <label>Purchase Link:</label>
+            <input type="text" @bind="NewItem.PurchaseLink" />
+
+            <label>Total Cost:</label>
+            <input type="number" @bind="NewItem.TotalCost" />
+
+            <label>Priority:</label>
+            <select @bind="NewItem.Priority">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+
+            <div class="modal-buttons">
+                <button class="btn-primary" @onclick="AddItem">Add</button>
+                <button class="btn-secondary" @onclick="CloseModal">Cancel</button>
+            </div>
+        </div>
+    </div>
+}
 
 @code {
     private List<Item> Items = new List<Item>();
