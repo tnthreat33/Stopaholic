@@ -1,0 +1,40 @@
+﻿@page "/login"
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+
+<h3>Login</h3>
+
+<input @bind="Email" placeholder="Email" />
+<input @bind="Password" type="password" placeholder="Password" />
+
+<button @onclick="LoginUser">Login</button>
+
+@code {
+    private string Email = "";
+    private string Password = "";
+
+    private async Task LoginUser()
+    {
+        var user = new { Email, Password };
+        var response = await Http.PostAsJsonAsync("https://localhost:7269/user/login", user);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadFromJsonAsync<TokenResponse>();
+            SecureStorage.Set("authToken", result.Token);
+            Navigation.NavigateTo("/");
+        }
+        else
+        {
+            Console.WriteLine("Login failed.");
+        }
+    }
+
+    class TokenResponse
+    {
+        public string Token { get; set; }
+    }
+}
+

@@ -2,6 +2,8 @@
 
 @using Stopaholic.Shared.Models;
 @inject HttpClient Http
+@inject NavigationManager Navigation
+@inject AuthStateProvider AuthenticationStateProvider
 
 <PageTitle>Stopaholic</PageTitle>
 
@@ -15,7 +17,7 @@
     <div class="list-display">
         <h2>Monthly Wants List</h2>
         <button class="btn-primary" @onclick="ShowAddItemModal">Add Item to List</button>
-        <button class="btn-secondary">Account</button>
+        <button class="btn-secondary" @onclick="NavigateToLogin">Account</button>
 
         <table class="table-no-borders">
             <thead>
@@ -42,7 +44,7 @@
                 else
                 {
                     <tr>
-                        <td colspan="5" style="text-align: center;">No items available</td>
+                        <td colspan="4" style="text-align: center;">No items available</td>
                     </tr>
                 }
             </tbody>
@@ -84,12 +86,36 @@
     private List<Item> Items = new List<Item>();
     private Item NewItem = new Item();
     private bool IsModalOpen = false;
+    private int? UserId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        // Get authentication state and extract user ID if authenticated
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            // Get the logged-in user's ID from the ClaimsPrincipal
+            UserId = int.Parse(user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value);
+
+            if (UserId.HasValue)
+            {
+                // Fetch items based on the user ID
+                await FetchItemsForUser(UserId.Value);
+            }
+        }
+        else
+        {
+            // If the user is not authenticated, redirect to the login page
+            NavigationManager.NavigateTo("/login");
+        }
+    }
+
+    private async Task FetchItemsForUser(int userId)
+    {
         try
         {
-            int userId = 1; // Temporary until login is added
             var requestUrl = $"https://localhost:7269/item?userId={userId}";
             Items = await Http.GetFromJsonAsync<List<Item>>(requestUrl) ?? new List<Item>();
         }
@@ -112,9 +138,17 @@
 
     private async Task AddItem()
     {
-        NewItem.UserId = 1; // Replace with logged-in user ID when authentication is added
-        await Http.PostAsJsonAsync("/item", NewItem);
-        Items.Add(NewItem);
-        CloseModal();
+        if (UserId.HasValue)
+        {
+            NewItem.UserId = UserId.Value;  // Use the logged-in user's ID
+            await Http.PostAsJsonAsync("/item", NewItem);
+            Items.Add(NewItem);
+            CloseModal();
+        }
+    }
+
+    private void NavigateToLogin()
+    {
+        NavigationManager.NavigateTo("/login");
     }
 }
